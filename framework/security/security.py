@@ -1,14 +1,12 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any, Union
 from pydantic import ValidationError
-
 from jose import jwt
 from passlib.context import CryptContext
 
 from config import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 ALGORITHM = "HS256"
 
 

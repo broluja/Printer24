@@ -1,4 +1,4 @@
-from src.controllers import users
+from src.controllers import users, organisations
 
 
 class Routes:
@@ -8,6 +8,5 @@ class Routes:
 
     def dispatch(self, app):
         app.include_router(users.router)
-        # app.include_router(organisations.router)
+        app.include_router(organisations.router)
         return self
-

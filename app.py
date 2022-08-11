@@ -1,8 +1,3 @@
-from starlette.middleware.sessions import SessionMiddleware
-
-from config import *
-from framework.docs.auth import Documentation
-
 import uvicorn
 import traceback
 import logging
@@ -12,10 +7,13 @@ from fastapi.security import OAuth2PasswordBearer, HTTPBasic
 from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 from framework.exceptions.exceptions import ServerException
 from framework.responses.response import ClientResponse
 from framework.routing.routes import Routes
+from framework.docs.auth import Documentation
+from config import *
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 logger = logging.getLogger('documents-api')
@@ -73,7 +71,8 @@ async def middleware(request: Request, call_next):
             ms = str(round((datetime.now() - start_time).total_seconds() * 1000, 1))
             response.headers["X-Process-Time"] = f"{ms}ms"
         return response
-    except Exception:
+    except Exception as e:
+        print(e)
         log = f">>> TIMESTAMP    : {datetime.now()}\n" \
               f">>> API          : API-DOCUMENTS" \
               f">>> PATH         : {str(request.scope.get('path'))}\n" \

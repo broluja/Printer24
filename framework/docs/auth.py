@@ -25,7 +25,7 @@ class Documentation:
         @app.get("/openapi.json", include_in_schema=False, dependencies=[Depends(SuperAdmin)])
         async def get_open_api_endpoint():
             return ORJSONResponse(get_openapi(
-                title="LOAD66 API",
+                title="PRINTER24 API",
                 version="1.0.0",
                 routes=app.routes,
                 description=OpenAPIMetadata.description,

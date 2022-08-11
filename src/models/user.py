@@ -8,6 +8,7 @@ from framework.database.settings import Base
 
 
 class User(Base):
+    """ Model for data table 'users' """
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -15,17 +16,15 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String, unique=True, index=True)
     is_superuser = Column(Boolean, default=False)
+    company = Column(ForeignKey('organisations.id'), unique=True)
 
-    # plan = relationship("BillingPlan", foreign_keys=[billing_plan_id])
-    # c_via_secondary = relationship("Permission", secondary="billing_plans",
-    #                                primaryjoin="User.billing_plan_id == BillingPlan.id",
-    #                                secondaryjoin="Permission.billing_plan_id == BillingPlan.id",
-    #                                viewonly=True)
+    organisation = relationship('Organisation', foreign_keys=[company])
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "username": self.username,
-            "email": self.email,
-            "is_superuser": self.is_superuser,
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'is_superuser': self.is_superuser,
+            'company': self.company
         }
