@@ -49,7 +49,7 @@ def create_superuser(first_name: str, last_name: str, email: str, password: str,
 
 @router.post('/register')
 def register(first_name: str, last_name: str, email: str, admin: SuperUser = Depends()):
-    """ Superuser`s endpoint for registering his workers. Individual registration. """
+    """ Superuser`s endpoint for registering his workers. Individual registration, email used as a password. """
     try:
         valid = validate_email(email)
         email = valid.email
@@ -73,7 +73,7 @@ def register(first_name: str, last_name: str, email: str, admin: SuperUser = Dep
 
 @router.post('/bulk_register')
 def bulk_register(iterable: List[str], admin: SuperUser = Depends()):
-    """ Superuser`s endpoint for group registration. Using iterable with emails."""
+    """ Superuser`s endpoint for group registration. Using iterable with emails. Email used as password"""
     for email in iterable:
         full_name = email.split('@')[0]
         first_name, last_name = full_name.split('.')
@@ -122,7 +122,7 @@ def reset_password(email: str, authenticated: Authenticated = Depends()):
 
 @router.get('/reset_password_complete')
 def reset_password_complete(code: int, new_password: str, password_confirm):
-    """ Completing password reset """
+    """ Completing password reset. """
     try:
         user = user_repository.get_by_code(code)
     except:

@@ -9,12 +9,13 @@ from src.repository.user_repository import user_repository
 router = APIRouter(
     prefix='/organisations',
     tags=['organisations'],
-    responses={404: {"description": "Not found"}})
+    responses={404: {"description": "Not found"}}
+)
 
 
 @router.post('')
 def create(name: str):
-    """ Registering organisation """
+    """ Registering organisation. """
     if organisation_repository.get_by_name(name):
         return ServerException(message='This company already registered.', status_code=400)
     try:
@@ -26,7 +27,7 @@ def create(name: str):
 
 @router.put('')
 def update(name: str, new_name: str, email: str, admin: SuperUser = Depends()):
-    """ Updating organisation """
+    """ Updating organisation. """
     user = user_repository.get_by_email(email)
     organisation = organisation_repository.get_by_name(name)
 

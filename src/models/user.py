@@ -27,8 +27,9 @@ class User(Base):
     def to_dict(self):
         return {
             'id': self.id,
-            'username': self.username,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
             'email': self.email,
             'is_superuser': self.is_superuser,
-            'company': self.company
+            'company_id': self.company
         }
