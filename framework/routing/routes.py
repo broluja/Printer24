@@ -2,6 +2,7 @@ from src.controllers import users, organisations
 
 
 class Routes:
+    """ Registering routes """
     def __init__(self, app):
         self.app = app
         self.dispatch(app)

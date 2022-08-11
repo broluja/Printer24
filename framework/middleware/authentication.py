@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import Request, Response, HTTPException, Cookie, Header
+from fastapi import Request, HTTPException
 from fastapi.security.base import SecurityBase
 from starlette.status import HTTP_403_FORBIDDEN
 from fastapi.security.utils import get_authorization_scheme_param
@@ -23,7 +23,7 @@ class Authenticated:
         try:
             self.user = self.validate_user()
         except Exception as e:
-            raise ServerException(message=e.__str__(), status_code=401) from e
+            raise ServerException(message=str(e), status_code=401) from e
 
     def validate_user(self):
         email = validate_token(self.token)
@@ -34,13 +34,14 @@ class Authenticated:
 
 
 class SuperUser(Authenticated):
-    def __init__(self, token):
+    def __init__(self, token: str):
         super().__init__(token)
         self.validate_superuser()
 
     def validate_superuser(self):
         if not self.user.is_superuser:
             raise ServerException(message="Superuser status missing", status_code=401)
+        return True
 
 
 class SuperAdmin(object):

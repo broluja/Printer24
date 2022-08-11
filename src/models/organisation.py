@@ -11,10 +11,10 @@ class Organisation(Base):
     __tablename__ = "organisations"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    organisation = Column(String)
+    name = Column(String)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.organisation,
+            'name': self.name,
         }

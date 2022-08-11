@@ -5,16 +5,7 @@ from fastapi import APIRouter
 class RouterWrapper:
     def __init__(self, _router: APIRouter):
         self.router = _router
-        self.http_verbs = [
-            "get",
-            "post",
-            "put",
-            "patch",
-            "delete",
-            "head",
-            "trace",
-            "websocket",
-        ]
+        self.http_verbs = ['get', 'post', 'put', 'patch', 'delete', 'head', 'trace', 'websocket']
 
     def __getattr__(self, verb):
         if verb not in self.http_verbs:

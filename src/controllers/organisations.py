@@ -18,16 +18,15 @@ def create(name: str):
     if organisation_repository.get_by_name(name):
         return ServerException(message='This company already registered.', status_code=400)
     try:
-        organisation_repository.create({
-            'organisation': name
-        })
+        organisation_repository.create({'name': name})
     except Exception as e:
         print(e)
         return ServerException(message='Company creation failed.', status_code=500)
 
 
 @router.put('')
-def update(name: str, new_name: str, email:str, admin: SuperUser = Depends()):
+def update(name: str, new_name: str, email: str, admin: SuperUser = Depends()):
+    """ Updating organisation """
     user = user_repository.get_by_email(email)
     organisation = organisation_repository.get_by_name(name)
 

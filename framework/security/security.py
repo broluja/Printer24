@@ -5,6 +5,7 @@ from jose import jwt
 from passlib.context import CryptContext
 
 from config import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY
+from framework.exceptions.exceptions import ServerException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
@@ -31,8 +32,7 @@ def get_password_hash(password: str) -> str:
 def validate_token(token):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=ALGORITHM)
-
     except (jwt.JWTError, ValidationError) as e:
-        raise ValidationError from e
+        raise ServerException(status_code=400, message="Could not validate token") from e
 
     return payload.get('email')

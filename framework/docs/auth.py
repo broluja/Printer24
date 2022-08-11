@@ -1,11 +1,10 @@
 from fastapi.openapi.docs import get_swagger_ui_html
-
-from framework.middleware.authentication import BasicAuth, SuperAdmin
 from fastapi import Depends, Response, Request
 from fastapi.responses import ORJSONResponse
 from fastapi.openapi.utils import get_openapi
 
 from framework.docs.metadata import OpenAPIMetadata
+from framework.middleware.authentication import BasicAuth, SuperAdmin
 
 
 class Documentation:

@@ -12,11 +12,14 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    username = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
+    company = Column(ForeignKey('organisations.id'), unique=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String, unique=True, index=True)
     is_superuser = Column(Boolean, default=False)
-    company = Column(ForeignKey('organisations.id'), unique=True)
+    has_color = Column(Boolean, default=False)
+    limit = Column(Integer, default=50)
     code = Column(Integer, unique=True)
 
     organisation = relationship('Organisation', foreign_keys=[company])

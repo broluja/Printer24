@@ -11,7 +11,7 @@ class OrganisationRepository(CRUDBase[Organisation]):
         return self.db.query(Organisation).filter(Organisation.id == uid).first()
 
     def get_by_name(self, name: str) -> Optional[Organisation]:
-        return self.db.query(Organisation).filter(Organisation.organisation == name).first()
+        return self.db.query(Organisation).filter(Organisation.name == name).first()
 
 
 organisation_repository = OrganisationRepository(Organisation)

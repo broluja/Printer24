@@ -18,15 +18,8 @@ from config import *
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 logger = logging.getLogger('documents-api')
 
-app = FastAPI(
-    debug=DEBUG,
-    default_response_class=ClientResponse,
-    docs_url=None,
-    redoc_url=None,
-    openapi_url=None
-)
+app = FastAPI(debug=DEBUG, default_response_class=ClientResponse, docs_url=None, redoc_url=None, openapi_url=None)
 app.add_middleware(SessionMiddleware, secret_key="!secret")
-
 
 app.add_middleware(
     middleware_class=CORSMiddleware,
@@ -36,12 +29,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
-app.add_middleware(
-    middleware_class=TrustedHostMiddleware,
-    allowed_hosts=["*"]
-)
-
+app.add_middleware(middleware_class=TrustedHostMiddleware, allowed_hosts=["*"])
 
 security = HTTPBasic()
 Documentation(app)
@@ -86,12 +74,7 @@ async def middleware(request: Request, call_next):
             logger.error(log)
         return ORJSONResponse(
             status_code=400,
-            content={
-                "message": "An unknown error occurred",
-                "status_code": 400,
-                "success": False,
-                "data": None
-            }
+            content={"message": "An unknown error occurred", "status_code": 400, "success": False, "data": None}
         )
 
 
