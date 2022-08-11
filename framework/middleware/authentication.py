@@ -15,7 +15,7 @@ logger = logging.getLogger('documents-api')
 
 
 class Authenticated:
-    def __init__(self, response: Response, token: str):
+    def __init__(self, token: str):
         self.token = token
         if not token:
             raise ServerException(message="Token Missing", status_code=401)
@@ -33,14 +33,18 @@ class Authenticated:
             raise HTTPException(status_code=404, detail="User not found")
 
 
-class SuperAdmin:
-    def __init__(
-            self,
-            response: Response,
-            token: str = Cookie(None),
-            authorization: Optional[str] = Header(None),
-    ):
-        pass
+class SuperUser(Authenticated):
+    def __init__(self, token):
+        super().__init__(token)
+        self.validate_superuser()
+
+    def validate_superuser(self):
+        if not self.user.is_superuser:
+            raise ServerException(message="Superuser status missing", status_code=401)
+
+
+class SuperAdmin(object):
+    pass
 
 
 class BasicAuth(SecurityBase):

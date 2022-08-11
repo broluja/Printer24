@@ -12,8 +12,8 @@ class UserRepository(CRUDBase[User]):
     def get_by_uid(self, uid: str) -> Optional[User]:
         return self.db.query(User).filter(User.id == uid).first()
 
-    def get_by_company(self, company: str) -> Optional[User]:
-        return self.db.query(User).filter(User.company == company).first()
+    def get_by_code(self, code: int) -> Optional[User]:
+        return self.db.query(User).filter(User.code == code).first()
 
 
 user_repository = UserRepository(User)

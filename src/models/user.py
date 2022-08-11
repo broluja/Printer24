@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean, ForeignKey
+from sqlalchemy import Column, String, Boolean, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -17,6 +17,7 @@ class User(Base):
     hashed_password = Column(String, unique=True, index=True)
     is_superuser = Column(Boolean, default=False)
     company = Column(ForeignKey('organisations.id'), unique=True)
+    code = Column(Integer, unique=True)
 
     organisation = relationship('Organisation', foreign_keys=[company])
 
