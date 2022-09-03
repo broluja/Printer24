@@ -18,7 +18,7 @@ router = APIRouter(
 
 
 @router.post('/superuser')
-def create_superuser(first_name: str, last_name: str, email: str, password: str, password2: str, company: str, ):
+def create_superuser(first_name: str, last_name: str, email: str, password: str, password2: str, company: str):
     """ Endpoint for superuser creation. Only owners has access. """
     if password != password2:
         return ServerException(message='Your passwords do not match. Try again', status_code=400)
